@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: stress
+  name: stress
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    app: stress
+  name: stress
+rules:
+- apiGroups:
+  - extensions
+  resourceNames:
+  - restricted-psp
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+- apiGroups:
+  - ""
+  resources:
+  - "*"
+  verbs:
+  - "*"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app: stress
+  name: stress
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: stress
+subjects:
+  - kind: ServiceAccount
+    name: stress
