@@ -1,4 +1,4 @@
-FROM mtr.external.otc.telekomcloud.com/mcsps/ubuntu:20.04
+FROM ubuntu:latest
 #
 # Build stress tool
 #
@@ -15,4 +15,5 @@ ENV STRESS_VM=1
 ENV STRESS_VM_BYTES=256M
 ENV STRESS_TIMEOUT=3600s
 
-CMD stress --cpu ${STRESS_CPU} --vm ${STRESS_VM} --vm-bytes ${STRESS_VM_BYTES} --timeout ${STRESS_TIMEOUT}
+ENTRYPOINT ["stress"]
+CMD ["--cpu", "${STRESS_CPU}", "--vm", "${STRESS_VM}", "--vm-bytes", "${STRESS_VM_BYTES}", "--timeout", "${STRESS_TIMEOUT}"]
